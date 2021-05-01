@@ -4695,7 +4695,11 @@ tor: openssl zlib libevent-2.0.21 tor/Makefile
 	@$(SEP)
 	$(MAKE) -C $@ $(PARALLEL_BUILD)
 
-tor/Makefile:
+tor/stamp-h1:
+	cd tor && autoreconf -fi
+	touch $@
+
+tor/Makefile: tor/stamp-h1
 	(cd tor ; $(CONFIGURE) --with-libevent-dir=$(STAGEDIR)/usr \
 		--with-openssl-dir=$(TOP)/openssl --with-zlib-dir=$(TOP)/zlib \
 		--disable-asciidoc --disable-unittests \
@@ -4710,6 +4714,7 @@ tor-install:
 tor-clean:
 	[ ! -f tor/Makefile ] || $(MAKE) -C tor clean
 	@rm -f tor/Makefile
+	@rm -f tor/stamp-h1
 
 iproute2:
 	@$(SEP)

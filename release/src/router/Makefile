@@ -7164,10 +7164,11 @@ GeoIP-1.6.2-clean:
 	-@[ ! -f GeoIP-1.6.2/Makefile ] || $(MAKE) -C GeoIP-1.6.2 distclean
 	@rm -f GeoIP-1.6.2/stamp-h1
 
-wget/Makefile.in: wget/Makefile.am
+wget/stamp-h1:
 	cd wget && autoreconf -fi
+	touch $@
 
-wget/Makefile: wget/Makefile.in
+wget/Makefile: wget/stamp-h1
 	cd wget && $(CONFIGURE) \
 		--with-ssl=openssl --prefix=/usr --sysconfdir=/etc \
 		--disable-opie --disable-ntlm --disable-debug --disable-nls --disable-rpath \
@@ -7186,6 +7187,7 @@ wget: openssl zlib wget/Makefile
 wget-clean:
 	[ ! -f wget/Makefile ] || $(MAKE) -C wget distclean
 	@rm -f wget/Makefile
+	@rm -f wget/stamp-h1
 
 wget-install:
 	install -D wget/src/wget $(INSTALLDIR)/wget/usr/sbin/wget

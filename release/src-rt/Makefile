@@ -3647,9 +3647,9 @@ define RouterOptions
 		sed -i "/RTCONFIG_OOKLA\>/d" $(1); \
 		echo "RTCONFIG_OOKLA=y" >>$(1); \
 	fi; \
-	if [ "$(OOKLA_LITE)" = "y" ]; then \
-		sed -i "/RTCONFIG_OOKLA_LITE\>/d" $(1); \
-		echo "RTCONFIG_OOKLA_LITE=y" >>$(1); \
+	if [ "$(MOSQUITTO)" = "y" ]; then \
+		sed -i "/RTCONFIG_MOSQUITTO\>/d" $(1); \
+		echo "RTCONFIG_MOSQUITTO=y" >>$(1); \
 	fi; \
 	if [ "$(NoETH)" = "y" ]; then \
 		sed -i "/RTCONFIG_NoETH\>/d" $(1); \

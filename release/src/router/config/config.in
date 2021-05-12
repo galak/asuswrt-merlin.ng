@@ -2350,8 +2350,8 @@ config RTCONFIG_OOKLA
 	bool "speedtest function powered by Ookla"
 	default n
 
-config RTCONFIG_OOKLA_LITE
-	bool "speedtest function powered by Ookla - lite version to store in memory"
+config RTCONFIG_MOSQUITTO
+	bool "mosquitto - mqtt broker"
 	default n
 
 config RTCONFIG_QCA_MCSD

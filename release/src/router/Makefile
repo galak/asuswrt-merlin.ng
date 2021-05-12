@@ -858,6 +858,8 @@ obj-$(RTCONFIG_TRAFFIC_LIMITER) += traffic_limiter
 
 obj-$(RTCONFIG_OOKLA) += ookla_speedtest
 
+obj-$(RTCONFIG_MOSQUITTO) += mosquitto
+
 obj-$(RTCONFIG_LETSENCRYPT) += openssl
 obj-$(RTCONFIG_LETSENCRYPT) += acme.sh
 obj-$(RTCONFIG_LETSENCRYPT) += libletsencrypt
@@ -7198,6 +7200,30 @@ wget-install:
 rtk_wifi_eventd: $(if $(RTCONFIG_CFGSYNC), cfg_mnt)
 
 cfg_mnt: $(if $(RTCONFIG_NOTIFICATION_CENTER),nt_center sqlite wlc_nt) $(if $(RTCONFIG_AMAS),lldpd-0.9.8 amas-utils) $(if $(RTCONFIG_LANTIQ),libfapi-0.1) libasuslog
+
+mosquitto: openssl
+	@echo =================
+	@echo CROSS_COMPILE=$(CROSS_COMPILE) 
+	@echo CC=$(CC) 
+	@echo LD=$(LD)
+	@echo =================
+	$(MAKE) -C $@ WITH_DOCS=no WITH_CJSON=no UNAME=Linux CROSS_COMPILE="" \
+		CFLAGS="-I$(TOP)/openssl/include" \
+		LDFLAGS="-L$(TOP)/openssl -lssl -lcrypto"
+
+mosquitto-install:
+	@echo =================
+	@echo mosquitto-install [$(INSTALLDIR)]
+	@echo
+	install -D mosquitto/src/mosquitto $(INSTALLDIR)/mosquitto/usr/sbin/mosquitto
+	install -D mosquitto/apps/mosquitto_passwd/mosquitto_passwd \
+		   $(INSTALLDIR)/mosquitto/usr/bin/mosquitto_passwd
+	install -D mosquitto/mosquitto.conf $(INSTALLDIR)/mosquitto/rom/etc/mosquitto.conf
+	$(STRIP) $(INSTALLDIR)/mosquitto/usr/sbin/mosquitto
+	$(STRIP) $(INSTALLDIR)/mosquitto/usr/bin/mosquitto_passwd
+	sed -i 's|^#listener|listener 1883|g' $(INSTALLDIR)/mosquitto/rom/etc/mosquitto.conf
+	sed -i 's|^#password_file|password_file /jffs/configs/mosquitto/passwd|g' $(INSTALLDIR)/mosquitto/rom/etc/mosquitto.conf
+
 
 batctl-2016.0: libnl-bf
 	CFLAGS="-Os -ffunction-sections -fdata-sections $(CFLAGS)" \

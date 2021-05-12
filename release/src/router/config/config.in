@@ -2300,6 +2300,10 @@ config RTCONFIG_OOKLA
 	bool "speedtest function powered by Ookla"
 	default n
 
+config RTCONFIG_MOSQUITTO
+	bool "mosquitto - mqtt broker"
+	default n
+
 config RTCONFIG_QCA_MCSD
 	bool "Use qca-mcs for multicast packets"
 	default n

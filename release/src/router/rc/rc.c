@@ -2889,6 +2889,12 @@ int main(int argc, char **argv)
 		return 0;
 	}
 #endif
+#ifdef RTCONFIG_MOSQUITTO
+	else if (!strcmp(base, "start_mosquitto")) {
+		start_mosquitto();
+		return 0;
+	}
+#endif
 #ifdef RTCONFIG_NEW_USER_LOW_RSSI
 	else if (!strcmp(base, "start_roamast")) {
 		start_roamast();

@@ -9603,6 +9603,10 @@ start_services(void)
 	start_Tor_proxy();
 #endif
 
+#ifdef RTCONFIG_MOSQUITTO
+	start_mosquitto();
+#endif
+
 #ifdef RTCONFIG_CLOUDCHECK
 	start_cloudcheck();
 #endif
@@ -9954,6 +9958,9 @@ stop_services(void)
 #endif
 #ifdef RTCONFIG_TOR
 	stop_Tor_proxy();
+#endif
+#ifdef RTCONFIG_MOSQUITTO
+	stop_mosquitto();
 #endif
 #ifdef RTCONFIG_CLOUDCHECK
 	stop_cloudcheck();

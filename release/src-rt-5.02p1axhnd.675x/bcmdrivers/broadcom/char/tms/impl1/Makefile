@@ -50,7 +50,7 @@ endif
 
 #This Makefile structure requires that it will be called with -j1
 #Sub-makes of this Makefile can be called with -j
-MAKEFLAGS += -j1 --no-print-directory
+MAKEFLAGS += --no-print-directory
 
 
 # In this first pass we suppress parallelism to allow "make -jN" to work.

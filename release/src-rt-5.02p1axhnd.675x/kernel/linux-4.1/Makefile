@@ -1254,10 +1254,13 @@ else
 endif
 
 $(brcmdriver-dirs): $(vmlinux-dirs-1) | prepare_bcm_driver
+	@echo "$$$$$$$$$$$$$ WE ARE HERE $$$$$$$$$$ [$(PARALLEL_BUILD)]"
 ifdef NO_BRCMDRIVER_PARALLEL
+	@echo "NO NO NO build parallel"
 	$(Q)INC_RDP_FLAGS=${INC_RDP_FLAGS} $(MAKE) -j1 $(build)=$@
 else
-	$(Q)INC_RDP_FLAGS=${INC_RDP_FLAGS} $(MAKE) $(build)=$@
+	@echo "build parallel"
+	$(Q)INC_RDP_FLAGS=${INC_RDP_FLAGS} $(MAKE) $(PARALLEL_BUILD) $(build)=$@
 endif
 
 PHONY += $(vmlinux-dirs-2)

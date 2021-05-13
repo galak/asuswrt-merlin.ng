@@ -417,7 +417,8 @@ $(KERNEL_DIR)/.pre_kernelbuild: $(BCM_SWVERSION_FILE) $(BCM_KF_KCONFIG_FILE) bcm
 else
 $(KERNEL_DIR)/.pre_kernelbuild: $(BCM_KF_KCONFIG_FILE)
 endif
-	CURRENT_ARCH=$(KERNEL_ARCH) TOOLCHAIN_TOP= $(MAKE) -f build/pre_kernelbuild.mk
+	@echo "########  pre_kernelbuild [$(PARALLEL_BUILD)]"
+	CURRENT_ARCH=$(KERNEL_ARCH) TOOLCHAIN_TOP= $(MAKE) $(PARALLEL_BUILD) -f build/pre_kernelbuild.mk
 
 ifdef BCM_KF
 kernelbuild: $(KERNEL_DIR)/.pre_kernelbuild hnd_dongle rdp_link
@@ -1582,7 +1583,7 @@ patch:
 
 version_info: sanity_check $(KERNEL_DIR)/.pre_kernelbuild
 	@echo "$(MAKECMDGOALS):";\
-	CURRENT_ARCH=$(KERNEL_ARCH) $(MAKE) -C $(BUILD_DIR)/build -f Bcmkernel.mk -j1 --silent version_info;
+	CURRENT_ARCH=$(KERNEL_ARCH) $(MAKE) -C $(BUILD_DIR)/build -f Bcmkernel.mk $(PARALLEL_BUILD) --silent version_info;
 	# FIXME -- should not need -j1 here
 
 ###########################################

@@ -8961,6 +8961,11 @@ wdp:
 		Tor_microdes_check();
 #endif
 
+#ifdef RTCONFIG_MOSQUITTO
+	if (!pids("mosquitto"))
+		start_mosquitto();
+#endif
+
 #ifdef RTCONFIG_ERP_TEST
 	ErP_Test();
 #endif

@@ -13053,6 +13053,10 @@ NO_USB_CAP:
 	add_rc_support("tor");
 #endif
 
+#ifdef RTCONFIG_MOSQUITTO
+	add_rc_support("mosquitto");
+#endif
+
 #ifdef RTCONFIG_HTTPS
 	add_rc_support("HTTPS");
 

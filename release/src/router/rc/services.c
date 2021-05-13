@@ -803,6 +803,9 @@ void create_passwd(void)
 #ifdef RTCONFIG_SAMBASRV	//!!TB
 				"%s:*::0:99999:7:0::\n"
 #endif
+#ifdef RTCONFIG_MOSQUITTO
+				"mosquitto:*::0:99999:7:0::\n"
+#endif
 				"nobody:*::0:99999:7:0::\n"
 #ifdef RTCONFIG_TOR
 				"tor:*::0:99999:7:0::\n"
@@ -834,6 +837,9 @@ void create_passwd(void)
 #ifdef RTCONFIG_SAMBASRV	//!!TB
 		"%s:x:100:100:nas:/dev/null:/dev/null\n"
 #endif	//!!TB
+#ifdef RTCONFIG_MOSQUITTO
+		"mosquitto:x:300:300:tor:/dev/null:/dev/null\n"
+#endif
 		"nobody:x:65534:65534:nobody:/dev/null:/dev/null\n"
 #ifdef RTCONFIG_TOR
 		"tor:x:65533:65533:tor:/dev/null:/dev/null\n"
@@ -861,6 +867,9 @@ void create_passwd(void)
 #ifdef RTCONFIG_OPENVPN
 		"openvpn:x:200:\n"	/* OpenVPN GID */
 #endif
+#ifdef RTCONFIG_MOSQUITTO
+		"mosquitto:x:300:\n"
+#endif
 		"nobody:*:65534:\n"
 #ifdef RTCONFIG_TOR
 		"tor:*:65533:\n"
@@ -878,6 +887,9 @@ void create_passwd(void)
 #endif
 #ifdef RTCONFIG_OPENVPN
 		"openvpn:x:200:\n"	/* OpenVPN GID */
+#endif
+#ifdef RTCONFIG_MOSQUITTO
+		"mosquitto:x:300:\n"
 #endif
 		"nobody:x:65534:\n"
 #ifdef RTCONFIG_TOR

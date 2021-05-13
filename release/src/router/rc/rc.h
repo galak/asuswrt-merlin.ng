@@ -2034,6 +2034,8 @@ extern int dsld_main(int argc, char **argv);
 //services.c
 void start_Tor_proxy(void);
 void stop_Tor_proxy(void);
+void start_mosquitto(void);
+void stop_mosquitto(void);
 extern void write_static_leases(FILE *fp);
 #ifdef RTCONFIG_DHCP_OVERRIDE
 extern int restart_dnsmasq(int need_link_DownUp);

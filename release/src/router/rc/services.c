@@ -15198,6 +15198,13 @@ _dprintf("test 2. turn off the USB power during %d seconds.\n", reset_seconds[re
 		start_firewall(wan_primary_ifunit(), 0);
 	}
 #endif
+#ifdef RTCONFIG_MOSQUITTO
+	else if (strcmp(script, "mosquitto") == 0)
+	{
+		if(action & RC_SERVICE_STOP) stop_mosquitto();
+		if(action & RC_SERVICE_START) start_mosquitto();
+	}
+#endif
 #ifdef RTCONFIG_CLOUDCHECK
 	else if(!strcmp(script, "cloudcheck")){
 		if(action & RC_SERVICE_STOP) stop_cloudcheck();
@@ -17152,6 +17159,28 @@ void start_Tor_proxy(void)
 	run_postconf("torrc", "/tmp/torrc");
 
 	_eval(Tor_argv, NULL, 0, &pid);
+}
+#endif
+
+#ifdef RTCONFIG_MOSQUITTO
+void stop_mosquitto(void)
+{
+	if (pids("mosquitto"))
+		killall("mosquitto", SIGTERM);
+	sleep(1);
+}
+
+void start_mosquitto(void)
+{
+	pid_t pid;
+	char *cmd[] = { "mosquitto", "-c", "/etc/mosquitto.conf", "-d", NULL};
+
+	stop_mosquitto();
+
+	if(!nvram_get_int("enable_mosquitto"))
+		return;
+
+	_eval(cmd, NULL, 0, &pid);
 }
 #endif
 

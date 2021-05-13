@@ -902,6 +902,9 @@ void create_passwd(void)
 		fprintf(fp, "%s:%s:0:0:99999:7:0:0:\n", smbd_user, "*");
 #endif
 		fprintf(fp, "%s:%s:0:0:99999:7:0:0:\n", "nobody", "*");
+#ifdef RTCONFIG_MOSQUITTO
+		fprintf(fp, "%s:%s:0:0:99999:7:0:0:\n", "mosquitto", "*");
+#endif
 #ifdef RTCONFIG_TOR
 		fprintf(fp, "%s:%s:0:0:99999:7:0:0:\n", "tor", "*");
 #endif
@@ -930,6 +933,9 @@ void create_passwd(void)
 			"openvpn:*::\n"	/* OpenVPN GID */
 #endif
 			"nobody:*::\n"
+#ifdef RTCONFIG_MOSQUITTO
+			"mosquitto:*::\n"
+#endif
 #ifdef RTCONFIG_TOR
 			"tor:*::\n"
 #endif
@@ -950,6 +956,9 @@ void create_passwd(void)
 			fprintf(fp, "%s:x:0:0:%s:/root:/bin/sh\n", shell_user, shell_user);
 #ifdef RTCONFIG_SAMBASRV
 		fprintf(fp, "%s:x:100:100:nas:/dev/null:/dev/null\n", smbd_user);
+#endif
+#ifdef RTCONFIG_MOSQUITTO
+		fprintf(fp, "mosquitto:x:300:300:mosquitto:/dev/null:/dev/null\n");
 #endif
 		fprintf(fp, "nobody:x:65534:65534:nobody:/dev/null:/dev/null\n");
 #ifdef RTCONFIG_TOR
@@ -976,6 +985,9 @@ void create_passwd(void)
 #endif
 #ifdef RTCONFIG_OPENVPN
 			"openvpn:*:200:\n"	/* OpenVPN GID */
+#endif
+#ifdef RTCONFIG_MOSQUITTO
+			"mosquitto:*:300:\n"
 #endif
 			"nobody:*:65534:\n"
 #ifdef RTCONFIG_TOR

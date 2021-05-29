@@ -22,7 +22,7 @@ start_wpa_supplicant(int unit, int restart)
 	char options[sizeof("/etc/wpa_supplicant-wanXXXXXXXXXX.conf")];
 	char control[sizeof("/var/run/wpa_supplicant-wanXXXXXXXXXX")];
 	char pidfile[sizeof("/var/run/wpa_supplicant-wanXXXXXXXXXX.pid")];
-	char *wpa_argv[] = {"/usr/sbin/wpa_supplicant",
+	char *wpa_argv[] = {"/usr/sbin/wpa_supplicant-2.7",
 		"-B", "-W",
 		"-i", NULL,	/* interface */
 		"-D", "wired",
@@ -30,7 +30,7 @@ start_wpa_supplicant(int unit, int restart)
 		"-P", pidfile,
 		NULL
 	};
-	char *cli_argv[] = {"/usr/sbin/wpa_cli",
+	char *cli_argv[] = {"/usr/sbin/wpa_cli-2.7",
 		"-B",
 		"-i", NULL,	/* interface */
 		"-p", control,
@@ -66,17 +66,21 @@ start_wpa_supplicant(int unit, int restart)
 	}
 	fprintf(fp,
 		"ctrl_interface=%s\n"
+		"eapol_version=1\n"
 		"ap_scan=0\n"
 		"fast_reauth=1\n"
 		"network={\n"
 		"	key_mgmt=IEEE8021X\n"
 		"	identity=\"%s\"\n"
-		"	password=\"%s\"\n"
+		"	eap=TLS\n"
 		"	eapol_flags=0\n"
+		"	phase1=\"allow_canned_success=1\"\n"
+		"	private_key=\"/jffs/configs/EAP/PrivateKey_PKCS1_001E46-211793651640592.pem\"\n"
+		"	ca_cert=\"/jffs/configs/EAP/CA_001E46-211793651640592.pem\"\n"
+		"	client_cert=\"/jffs/configs/EAP/Client_001E46-211793651640592.pem\"\n"
 		"}\n",
 		control,
-		nvram_safe_get(strcat_r(prefix, "pppoe_username", tmp)),
-		nvram_safe_get(strcat_r(prefix, "pppoe_passwd", tmp)));
+		nvram_safe_get(strcat_r(prefix, "pppoe_username", tmp)));
 	fclose(fp);
 
 	/* Start supplicant & monitor */

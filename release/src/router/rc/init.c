@@ -17310,6 +17310,10 @@ int init_main(int argc, char *argv[])
 		asm1042_upgrade(1);	// check whether upgrade firmware of ASM1042
 #endif
 
+		time_t tm = nvram_get_int("date");
+		if (tm > 0)
+			stime(&tm);
+
 		run_custom_script("init-start", 0, NULL, NULL);
 		setup_passwd();		// Re-apply now that jffs is up, in case of custom configs
 		use_custom_config("fstab", "/etc/fstab");

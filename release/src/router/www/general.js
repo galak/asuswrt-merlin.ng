@@ -464,6 +464,8 @@ function openLink(s){
 			tourl = "https://www.no-ip.com/newUser.php";
 		else if (document.form.ddns_server_x.value == 'WWW.NAMECHEAP.COM')
 			tourl = "https://www.namecheap.com";
+		else if (document.form.ddns_server_x.value == 'WWW.DYNV6.COM')
+			tourl = "https://dynv6.com";
 		else if (document.form.ddns_server_x.value == "FREEDNS.AFRAID.ORG")
 			tourl = "https://freedns.afraid.org/";
 		else if (document.form.ddns_server_x.value == 'WWW.ORAY.COM')

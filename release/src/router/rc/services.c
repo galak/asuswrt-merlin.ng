@@ -4148,6 +4148,10 @@ start_ddns(char *caller)
 	}
 	else if (strcmp(server, "WWW.NO-IP.COM") == 0)
 		service = "default@no-ip.com";
+	else if (strcmp(server, "WWW.DYNV6.COM") == 0) {
+		service = "dynv6";
+		asus_ddns = 11;
+	}
 	else if (strcmp(server, "WWW.NAMECHEAP.COM")==0) {
 		service = "namecheap";
 		asus_ddns = 10;
@@ -4300,6 +4304,10 @@ start_ddns(char *caller)
 				fprintf(fp, "ddns-server = dynamicdns.park-your-domain.com\n");
 				// We store the domain.tld in the username nvram
 				fprintf(fp, "ddns-path = \"/update?domain=%%u&password=%%p&host=%%h\"\n");
+			} else if (asus_ddns == 11) {
+				fprintf(fp, "custom dynv6 {\n");
+				fprintf(fp, "ddns-server = dynv6.com\n");
+				fprintf(fp, "ddns-path = \"/nic/update?hostname=%%h&myip=%%i\"\n");
 			} else {
 				fprintf(fp, "provider %s {\n", service);
 			}

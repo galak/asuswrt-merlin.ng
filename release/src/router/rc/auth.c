@@ -75,9 +75,9 @@ start_wpa_supplicant(int unit, int restart)
 		"	eap=TLS\n"
 		"	eapol_flags=0\n"
 		"	phase1=\"allow_canned_success=1\"\n"
-		"	private_key=\"/jffs/configs/EAP/PrivateKey_PKCS1_001E46-211793651640592.pem\"\n"
-		"	ca_cert=\"/jffs/configs/EAP/CA_001E46-211793651640592.pem\"\n"
-		"	client_cert=\"/jffs/configs/EAP/Client_001E46-211793651640592.pem\"\n"
+		"	private_key=\"/jffs/configs/EAP/PrivateKey.pem\"\n"
+		"	ca_cert=\"/jffs/configs/EAP/CA.pem\"\n"
+		"	client_cert=\"/jffs/configs/EAP/Client.pem\"\n"
 		"}\n",
 		control,
 		nvram_safe_get(strcat_r(prefix, "pppoe_username", tmp)));
